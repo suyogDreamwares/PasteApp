@@ -11,7 +11,6 @@ const Home = () => {
   const pasteId = searchParams.get("pasteId");
   const dispatch = useDispatch();
   const pastes = useSelector((state) => state.paste.pastes);
-  console.log("pastes::", pastes);
 
   useEffect(() => {
     if (pastes && pasteId) {
@@ -19,11 +18,9 @@ const Home = () => {
       if (index >= 0) {
         setTitle(pastes[index].title);
         setValue(pastes[index].content);
-        console.log(title);
-        console.log(value);
       }
     }
-  }, []);
+  }, [pasteId, pastes]);
 
   function createPaste() {
     const paste = {
@@ -34,7 +31,6 @@ const Home = () => {
     };
 
     const date = new Date(paste.createdAt);
-
     const formattedDate = date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -43,37 +39,37 @@ const Home = () => {
     paste.createdAt = formattedDate;
 
     if (pasteId) {
-      console.log("pasteId::", pasteId);
       dispatch(updatToPastes(paste));
     } else {
       dispatch(addToPastes(paste));
     }
+
     setTitle("");
     setValue("");
     setSearchParams({});
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-5">
-      <div className="flex flex-row gap-7 justify-between items-center">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+      <div className="flex flex-row gap-6 justify-between items-center">
         <input
           type="text"
           placeholder="Enter Title Here..."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="p-3 rounded-2xl mt-2 border-2 w-full sm:w-[66%] pl-4 text-lg text-gray-700 bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          className="p-4 rounded-lg mt-2 border-2 border-gray-300 w-full sm:w-[70%] text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <button
-          className="p-3 rounded-2xl mt-2 border-2 bg-indigo-500 text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="p-4 rounded-lg mt-2 bg-indigo-600 text-white font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
           onClick={createPaste}
         >
-          {pasteId ? "Update My Paste" : "Create New Paste"}
+          {pasteId ? "Update Paste" : "Create New Paste"}
         </button>
       </div>
 
       <div className="mt-8">
         <textarea
-          className="w-full sm:w-[66%] p-4 rounded-2xl border-2 bg-indigo-100 text-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          className="w-full sm:w-[70%] p-4 rounded-lg border-2 border-gray-300 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           value={value}
           placeholder="Enter Content Here..."
           rows={15}

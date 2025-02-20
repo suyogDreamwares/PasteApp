@@ -6,31 +6,27 @@ const PasteView = () => {
   const { pasteId } = useParams();
   const allPaste = useSelector((state) => state.paste.pastes);
 
-  const paste = allPaste.filter((paste) =>
-    paste.id === pasteId)[0];
-
-  console.log('paste::',paste);
+  const paste = allPaste.filter((paste) => paste.id === pasteId)[0];
 
   return (
-    <div>
-      <div className="flex flex-row gap-7 place-content-between">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+      <div className="flex flex-row gap-6 justify-between items-center">
         <input
-          disabled
           type="text"
-          placeholder="Enter Title Here..."
+          disabled
           value={paste.title}
-          className="p-2 rounded-2xl mt-2 border-2 w-[66%] pl-4"
+          className="p-4 rounded-lg mt-2 border-2 border-gray-300 w-full sm:w-[70%] text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
       </div>
+
       <div className="mt-8">
         <textarea
-          className=" w-[66%] pl-4 pt-2 rounded-2xl border-2"
-          disabled
-          value={paste.content
-          }
+          className="w-full sm:w-[70%] p-4 rounded-lg border-2 border-gray-300 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          value={paste.content}
           placeholder="Enter Content Here..."
           rows={15}
-        ></textarea>
+          disabled
+        />
       </div>
     </div>
   );
